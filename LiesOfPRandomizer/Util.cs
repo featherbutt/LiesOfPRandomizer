@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LiesOfPRandomzier;
+namespace LiesOfPRandomizer;
 
 public static class ExtensionMethods
 {
-    public static void Shuffle<T>(this List<T> input, Random random)
+
+    public static void Shuffle<T>(this List<T> input, System.Random random)
     {
         T[] values = input.ToArray();
         random.Shuffle(values);

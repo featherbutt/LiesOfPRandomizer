@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 using System.CommandLine;
 
 using UAssetAPI.Unversioned;
-using LiesOfPRandomzier;
+using LiesOfPRandomizer;
 using UAssetAPI;
 
 Option<FileInfo> usmapOption = new(
@@ -28,7 +28,7 @@ Option<DirectoryInfo> inDirOption = new(
 
 Option<FileInfo?> outPakOption = new(
     name: "--outPak",
-    description: "the location to write the new .pak file",
+    description: "the location to write the new .pak file"
 );
 
 Option<DirectoryInfo?> outAssetDirOption = new(
@@ -44,7 +44,7 @@ Option<FileInfo> outMapOption = new(
 
 Option<string?> aesKeyOption = new(
     name: "--aesKey",
-    description: "the game's decryption key. Required if loading from the base game directory",
+    description: "the game's decryption key. Required if loading from the base game directory"
 );
 
 
@@ -60,6 +60,12 @@ RootCommand rootCommand = new() {
 
 rootCommand.SetHandler((usmapFile, configFile, inDir, outPakFile, aesKey, outMap, outAssetDir) =>
 {
+    string[] commands =  [usmapFile?.ToString(),
+    configFile?.ToString(), inDir?.ToString(), outPakFile?.ToString(), aesKey?.ToString(),
+    outMap?.ToString(), outAssetDir?.ToString()];
+    foreach (string command in commands) {
+        Console.WriteLine(command);
+    }
     if (outPakFile == null && outAssetDir == null)
     {
         Console.WriteLine("Either --outAssetDir or --outPakFile must be provided.");
@@ -75,16 +81,16 @@ rootCommand.SetHandler((usmapFile, configFile, inDir, outPakFile, aesKey, outMap
         UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
     };
 
-    Config config = JsonSerializer.Deserialize<Config>(jsonString, deserializeOptions)!;
+    Config config = Config.FromJson(jsonString);
 
     Usmap usmap = new Usmap(usmapFile.FullName);
     AssetManager assetManager = AssetManager.Create(inDir, usmap, aesKey);
     Randomizer randomizer = new(config, assetManager);
+    randomizer.AddModule<WeaponModule>();
+    randomizer.AddModule<ItemModule>();
+    randomizer.AddModule<SkillModule>();
 
-    RandomizerMap map = randomizer.GenerateMap();
-    randomizer.ApplyChanges(map, outPakFile, outAssetDir);
-
-    map.Write(outMap.FullName);
+    randomizer.ApplyChanges(outPakFile, outMap, outAssetDir);
 
     Console.WriteLine("All done!");
 }, usmapOption, configOption, inDirOption, outPakOption, aesKeyOption, outMapOption, outAssetDirOption);

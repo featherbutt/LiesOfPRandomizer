@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LiesOfPRandomzier
+namespace LiesOfPRandomizer
 {
     public static class TieredShuffler<T> 
     {
@@ -18,9 +18,8 @@ namespace LiesOfPRandomzier
             }
         }
 
-        public static IEnumerable<T> Create(IEnumerable<T> sources, int bufferSize, int totalSize)
+        public static IEnumerable<T> Create(Random random, IEnumerable<T> sources, int bufferSize, int totalSize)
         {
-            var random = new Random();
             var enumerator = sources.GetEnumerator();
             enumerator.MoveNext();
             var buffer = new List<T>();

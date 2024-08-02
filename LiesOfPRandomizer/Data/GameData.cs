@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LiesOfPRandomzier;
+namespace LiesOfPRandomizer;
 
 public static class GameData
 {
@@ -191,28 +191,30 @@ public static class GameData
         "WP_PC_HND_FireAxe",
         "WP_PC_HND_ClockSword",
         "WP_PC_HND_Hwando",
+        "WP_PC_HND_ElectricCutter",
+        "WP_PC_HND_CrystalAxe",
+        "WP_PC_HND_ElectricHammer",
+        "WP_PC_HND_Baton",
+        "WP_PC_HND_Dagger",
+        "WP_PC_HND_RockDrill",
+        "WP_PC_HND_FlameSword",
+    ];
+
+    public static string[] BossWeaponHandles = [
         "WP_PC_HND_TransformGreatSword",
         "WP_PC_HND_Trident",
         "WP_PC_HND_CrystalSword",
         "WP_PC_HND_UmbrellaSword",
         "WP_PC_HND_Charkram",
-        "WP_PC_HND_ElectricCutter",
+        "WP_PC_HND_ChainScythe",
+        "WP_PC_HND_DragonGlaive",
         "WP_PC_HND_ScissorSword",
         "WP_PC_HND_Saber",
         "WP_PC_HND_SevenSword",
         "WP_PC_HND_Halberd",
         "WP_PC_HND_CoilRod",
-        "WP_PC_HND_CrystalAxe",
-        "WP_PC_HND_ElectricHammer",
-        "WP_PC_HND_Baton",
-        "WP_PC_HND_ChainScythe",
-        "WP_PC_HND_Dagger",
-        "WP_PC_HND_RockDrill",
         "WP_PC_HND_NoseStaff",
-        "WP_PC_HND_FlameSword",
-        "WP_PC_HND_DragonGlaive",
     ];
-
     public static string[] WeaponBlades = [
         "WP_PC_BLD_Kukri",
         "WP_PC_BLD_Rapier",
@@ -235,26 +237,29 @@ public static class GameData
         "WP_PC_BLD_FireAxe",
         "WP_PC_BLD_ClockSword",
         "WP_PC_BLD_Hwando",
+        "WP_PC_BLD_ElectricCutter",
+        "WP_PC_BLD_CrystalAxe",
+        "WP_PC_BLD_ElectricHammer",
+        "WP_PC_BLD_Baton",
+        "WP_PC_BLD_Dagger",
+        "WP_PC_BLD_RockDrill",
+        "WP_PC_BLD_FlameSword",
+    ];
+
+    public static string[] BossWeaponBlades = [
         "WP_PC_BLD_TransformGreatSword",
         "WP_PC_BLD_Trident",
         "WP_PC_BLD_CrystalSword",
         "WP_PC_BLD_UmbrellaSword",
         "WP_PC_BLD_Charkram",
-        "WP_PC_BLD_ElectricCutter",
+        "WP_PC_BLD_ChainScythe",
+        "WP_PC_BLD_DragonGlaive",
         "WP_PC_BLD_ScissorSword",
         "WP_PC_BLD_Saber",
         "WP_PC_BLD_SevenSword",
         "WP_PC_BLD_Halberd",
         "WP_PC_BLD_CoilRod",
-        "WP_PC_BLD_CrystalAxe",
-        "WP_PC_BLD_ElectricHammer",
-        "WP_PC_BLD_Baton",
-        "WP_PC_BLD_ChainScythe",
-        "WP_PC_BLD_Dagger",
-        "WP_PC_BLD_RockDrill",
         "WP_PC_BLD_NoseStaff",
-        "WP_PC_BLD_FlameSword",
-        "WP_PC_BLD_DragonGlaive",
     ];
 
     public static string[] FindableLegionArms = [

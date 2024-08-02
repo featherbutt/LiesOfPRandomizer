@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LiesOfPRandomzier;
+namespace LiesOfPRandomizer;
 
 public enum ItemPriority
 {
-    HIGHEST, MEDIUM, LOWEST, CHAFF, DONT_RANDOMIZE
+    MUST_BE_WEAPON, HIGHEST, MEDIUM, LOWEST, CHAFF, DONT_RANDOMIZE
 }
 
 internal static class ItemPriorityMethods
