@@ -32,7 +32,11 @@ The randomizer can be run on both Windows and Mac. However, Mac users will have 
 
 To build, I recommend opening `LiesOfPRandomizer.sln` in Visual Studio or Visual Studio Code.
 
-To run the randomizer, you'll need the .usmap file for the game. If you want the randomizer to read and write .pak files, you also need the game's encryption key. Neither is provided here.
+Once built, you can run the generated .exe from the command line. Running it with no arguments or with the `--help` flag should print a full list of flags.
+
+Running the program with the `--outPak` flag will generate a `.pak` file, which you can place in your game installation at `LiesofP\Content\Paks\~mods`. If this is your first mod, you'll need to create the `~mods` folder.
+
+To run this, you'll need the .usmap file for the game. If you want the randomizer to read and write .pak files, you also need the game's encryption key. Neither is provided here.
 
 You'll also need a config file sets the different parameters for randomization. An example config file is provided in `config.json`, feel free to modify it to your liking.
 
