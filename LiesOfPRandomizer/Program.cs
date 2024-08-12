@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.CommandLine;
@@ -60,15 +60,22 @@ RootCommand rootCommand = new() {
 
 rootCommand.SetHandler((usmapFile, configFile, inDir, outPakFile, aesKey, outMap, outAssetDir) =>
 {
-    string[] commands =  [usmapFile?.ToString(),
-    configFile?.ToString(), inDir?.ToString(), outPakFile?.ToString(), aesKey?.ToString(),
-    outMap?.ToString(), outAssetDir?.ToString()];
-    foreach (string command in commands) {
-        Console.WriteLine(command);
+    void PrintArgs() {
+        Console.WriteLine($"--usmap : {usmapFile.ToString()}");
+        Console.WriteLine($"--config : {configFile.ToString()}");
+        Console.WriteLine($"--inDir : {inDir.ToString()}");
+        Console.WriteLine($"--outPak : {outPakFile?.ToString()}");
+        Console.WriteLine($"--aesKey : {aesKey?.ToString()}");
+        Console.WriteLine($"--outMap : {outMap.ToString()}");
+        Console.WriteLine($"--outAssetDir : {outAssetDir?.ToString()}");
     }
+
     if (outPakFile == null && outAssetDir == null)
     {
+        PrintArgs();
+        Console.WriteLine();
         Console.WriteLine("Either --outAssetDir or --outPakFile must be provided.");
+        Console.WriteLine("Run with the --help flag to see all options.");
         return;
     }
 

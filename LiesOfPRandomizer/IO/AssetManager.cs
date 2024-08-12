@@ -74,7 +74,7 @@ public class AssetManager(AssetLoader assetLoader)
                 }
                 pakWriter.WriteIndex();
                 pakWriter.Close();
-
+                Console.WriteLine($"Wrote pak file {outPakFile.ToString()}");
             }
         }
 

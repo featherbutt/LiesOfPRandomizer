@@ -19,6 +19,7 @@ public class RandomizerMap(IDictionary<string, object> maps)
         };
         string serializedMap = JsonSerializer.Serialize(maps, jsonOptions);
         File.WriteAllText(outputFile, serializedMap);
+        Console.WriteLine($"Wrote randomizer map to {outputFile.ToString()}");
     }
 
     public T Get<T>() where T : Module.Map

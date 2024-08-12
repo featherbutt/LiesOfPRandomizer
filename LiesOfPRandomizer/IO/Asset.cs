@@ -19,7 +19,7 @@ public record class Asset(UAsset asset)
     {
         if (dirty)
         {
-            Console.WriteLine("Writing %s to %s", name, path);
+            Console.WriteLine($"Writing {name} to {path}/{name}.uasset", name, path);
             asset.Write(Path.Combine(path.FullName, name + ".uasset"));
         }
     }
@@ -27,7 +27,7 @@ public record class Asset(UAsset asset)
     {
         if (dirty)
         {
-            Console.WriteLine("Writing %s to the pak", name);
+            Console.WriteLine($"Writing {name} to pak file");
 
             MemoryStream assetStream = asset.WriteData();
             byte[] assetBytes = assetStream.ToArray();
