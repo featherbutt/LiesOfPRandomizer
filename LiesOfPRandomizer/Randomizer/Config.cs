@@ -40,8 +40,14 @@ public class Config(JsonDocument doc)
             // If no config was provided, use default values.
             return new();
         }
-        JsonSerializerOptions options = new();
+        JsonSerializerOptions options = new()
+        {
+            ReadCommentHandling = JsonCommentHandling.Skip,
+            AllowTrailingCommas = true,
+            UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
+        };
         options.Converters.Add(new JsonStringEnumConverter());
+    
         return moduleProperty.Deserialize<T>(options)!;
     }
 }
