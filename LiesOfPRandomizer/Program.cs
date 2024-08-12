@@ -74,7 +74,7 @@ rootCommand.SetHandler((usmapFile, configFile, inDir, outPakFile, aesKey, outMap
     {
         PrintArgs();
         Console.WriteLine();
-        Console.WriteLine("Either --outAssetDir or --outPakFile must be provided.");
+        Console.WriteLine("Either --outAssetDir or --outPak must be provided.");
         Console.WriteLine("Run with the --help flag to see all options.");
         return;
     }
