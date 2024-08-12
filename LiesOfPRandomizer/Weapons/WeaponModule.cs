@@ -125,14 +125,18 @@ public class WeaponModule(
 
         StructProperty constantInfo = assets.openStruct("CommonConstantInfo");
         ArrayProperty constantInfoArray = constantInfo.getArrayProperty("_CommonConstant_array");
+
+        List<string> weaponHandles = [..GameData.WeaponHandles, ..GameData.BossWeaponHandles];
+        List<string> weaponBlades = [..GameData.WeaponBlades, ..GameData.BossWeaponBlades];
+        
         if (config.randomize_starting_weapons)
         {
             for (int i = 1; i <= 3; i++)
             {
-                var handleId = random.Next(41);
-                var bladeId = random.Next(41);
-                constantInfoArray.getStructProperty("PC_action_type_hnd_" + i.ToString()).getStringProperty("_value").Value = GameData.WeaponHandles[handleId];
-                constantInfoArray.getStructProperty("PC_action_type_bld_" + i.ToString()).getStringProperty("_value").Value = GameData.WeaponBlades[bladeId];
+                var handleId = random.Next(weaponHandles.Count());
+                var bladeId = random.Next(weaponBlades.Count());
+                constantInfoArray.getStructProperty("PC_action_type_hnd_" + i.ToString()).getStringProperty("_value").Value = weaponHandles[handleId];
+                constantInfoArray.getStructProperty("PC_action_type_bld_" + i.ToString()).getStringProperty("_value").Value = weaponBlades[bladeId];
             }
         }
 

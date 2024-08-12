@@ -23,7 +23,6 @@ public interface Module {
     public abstract record class Map<ModuleType> : Map
             where ModuleType : Module {
         public static string GetModuleName() => ModuleType.name;
-        
     }
 
     public interface Config {}
