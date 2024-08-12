@@ -15,6 +15,18 @@ using System.Collections;
 
 namespace LiesOfPRandomizer;
 
+public class Property<T>(PropertyData<T> data, Asset asset)
+{
+    public T Value
+    {
+        get => data.Value; 
+        set {
+            asset.MarkDirty();
+            data.Value = value;
+        }
+    }
+}
+
 public class StringProperty(PropertyData<FString> data, Asset asset)
 {
     public string Value
@@ -61,25 +73,30 @@ public record class StructProperty(StructPropertyData data, Asset asset)
 {
     public StructProperty getStructProperty(string propertyName)
     {
-        return new StructProperty((StructPropertyData)getProperty(propertyName), asset);
+        return new StructProperty((StructPropertyData)getPropertyData(propertyName), asset);
     }
 
     public ArrayProperty getArrayProperty(string propertyName)
     {
-        return new ArrayProperty((ArrayPropertyData)getProperty(propertyName), asset);
+        return new ArrayProperty((ArrayPropertyData)getPropertyData(propertyName), asset);
     }
 
     public StringProperty getStringProperty(string propertyName)
     {
-        return new StringProperty(getProperty<FString>(propertyName), asset);
+        return new StringProperty(getPropertyData<FString>(propertyName), asset);
     }
 
     public NameProperty getNameProperty(string propertyName)
     {
-        return new NameProperty(getProperty<FName>(propertyName), asset);
+        return new NameProperty(getPropertyData<FName>(propertyName), asset);
     }
 
-    public PropertyData getProperty(string propertyName)
+    public Property<T> getProperty<T>(string propertyName)
+    {
+        return new(getPropertyData<T>(propertyName), asset);
+    }
+
+    private PropertyData getPropertyData(string propertyName)
     {
         foreach (var property in data.Value)
         {
@@ -91,7 +108,7 @@ public record class StructProperty(StructPropertyData data, Asset asset)
         throw new Exception("Struct property not found");
     }
 
-    public PropertyData<T> getProperty<T>(string propertyName)
+    private PropertyData<T> getPropertyData<T>(string propertyName)
     {
         foreach (var property in data.Value)
         {
