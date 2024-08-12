@@ -19,6 +19,11 @@ Note: This randomizer is still in Alpha. It's largely untested, some options may
 - No unpacking / repacking of assets required: just point the randomizer to the folder containing your game files and it does the rest, producing a pak file that can be dropped into the `~mods` folder in your game installation.
 - (But it can also read and write unpacked asset files if you know what you're doing and want to combine this with other mods.)
 
+The following features aren't supported yet, but may be added in the future:
+- Randomized amulet abilities
+- Randomized quest items
+- Randomized fable arts
+
 ## OS Support
 
 The randomizer can be run on both Windows and Mac. However, Mac users will have to unpack and repack manually. This is because of a dependency on https://github.com/trumank/repak, which does not have a prebuilt library for Apple Silicon. If you want to run this on Mac without unpacking and repacking assets, you'll need to install repak yourself, and build it from source if you're using ARM.
