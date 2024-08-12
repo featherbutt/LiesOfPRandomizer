@@ -20,43 +20,49 @@ public class SkillModule(
     public override SkillMap GenerateMap() {
         
         List<string> sharedSkillPool = [];
+        List<string> skillSlots = [];
+        List<string> skillNodes = [];
 
-        List<string> skillSlots = [.. GameData.SkillSlotEffects];
-        if (config.max_organ_level >= 6)
-        {
-            skillSlots.AddRange(GameData.Level6SkillSlotEffects);
-        }
-        if (config.max_organ_level >= 7)
-        {
-            skillSlots.AddRange(GameData.Level7SkillSlotEffects);
-        }
+        if (config.skill_slots != Config.ShuffleMode.DONT_RANDOMIZE) {
+            skillSlots = [.. GameData.SkillSlotEffects];
+            if (config.max_organ_level >= 6)
+            {
+                skillSlots.AddRange(GameData.Level6SkillSlotEffects);
+            }
+            if (config.max_organ_level >= 7)
+            {
+                skillSlots.AddRange(GameData.Level7SkillSlotEffects);
+            }
 
-        if (config.skill_slots == Config.ShuffleMode.WITH_SAME)
-        {
-            skillSlots.Shuffle(random);
-        }
-        if (config.skill_slots == Config.ShuffleMode.WITH_OTHERS)
-        {
-            sharedSkillPool.AddRange(skillSlots);
-        }
-
-        List<string> skillNodes = [.. GameData.SkillNodeEffects];
-        if (config.max_organ_level >= 6)
-        {
-            skillNodes.AddRange(GameData.Level6SkillNodeEffects);
-        }
-        if (config.max_organ_level >= 7)
-        {
-            skillNodes.AddRange(GameData.Level7SkillNodeEffects);
+            if (config.skill_slots == Config.ShuffleMode.WITH_SAME)
+            {
+                skillSlots.Shuffle(random);
+            }
+            if (config.skill_slots == Config.ShuffleMode.WITH_OTHERS)
+            {
+                sharedSkillPool.AddRange(skillSlots);
+            }
         }
 
-        if (config.skill_nodes == Config.ShuffleMode.WITH_SAME)
-        {
-            skillNodes.Shuffle(random);
-        }
-        if (config.skill_nodes == Config.ShuffleMode.WITH_OTHERS)
-        {
-            sharedSkillPool.AddRange(skillNodes);
+        if (config.skill_slots != Config.ShuffleMode.DONT_RANDOMIZE) {
+            skillNodes = [.. GameData.SkillNodeEffects];
+            if (config.max_organ_level >= 6)
+            {
+                skillNodes.AddRange(GameData.Level6SkillNodeEffects);
+            }
+            if (config.max_organ_level >= 7)
+            {
+                skillNodes.AddRange(GameData.Level7SkillNodeEffects);
+            }
+
+            if (config.skill_nodes == Config.ShuffleMode.WITH_SAME)
+            {
+                skillNodes.Shuffle(random);
+            }
+            if (config.skill_nodes == Config.ShuffleMode.WITH_OTHERS)
+            {
+                sharedSkillPool.AddRange(skillNodes);
+            }
         }
 
         sharedSkillPool.Shuffle(random);
