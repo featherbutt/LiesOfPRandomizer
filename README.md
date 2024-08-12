@@ -1,30 +1,42 @@
-# UAssetAPI
-[![CI Status](https://img.shields.io/github/actions/workflow/status/atenfyr/UAssetAPI/build.yml?label=CI)](https://github.com/atenfyr/UAssetAPI/actions)
-[![Issues](https://img.shields.io/github/issues/atenfyr/UAssetAPI.svg?style=flat-square)](https://github.com/atenfyr/UAssetAPI/issues)
-[![License](https://img.shields.io/github/license/atenfyr/UAssetAPI.svg?style=flat-square)](https://github.com/atenfyr/UAssetAPI/blob/master/LICENSE.md)
+# Lies of P Randomizer
+[Issues](https://github.com/featherbutt/LiesOfPRandomizer/issues) | [License](https://github.com/featherbutt/LiesOfPRandomizer/blob/master/LICENSE.md)
 
-UAssetAPI is a low-level .NET library for reading and writing Unreal Engine game assets.
-
-<img src="https://i.imgur.com/GZbr93m.png" align="center">
+Note: This randomizer is still in Alpha. It's largely untested, some options may not work as expected, and some options might not work at all. If you notice anything not wortking properly, please file an [Issue](https://github.com/featherbutt/LiesOfPRandomizer/issues).
 
 ## Features
-- Low-level read/write capability for a wide variety of cooked and uncooked .uasset files from ~4.13 to 5.3
-- Support for more than 100 property types and 12 export types
-- Support for JSON export and import to a proprietary format that maintains binary equality
-- Support for reading and writing raw Kismet (blueprint) bytecode
-- Reading capability for the unofficial .usmap format to parse ambiguous and unversioned properties
-- Robust fail-safes for many properties and exports that fail serialization
-- Automatic reflection for new property types in other loaded assemblies
+- Randomize many aspects of the game, including:
+  - The locations of all items in the game, including weapons, armor, cosmetics, and upgrade materials
+  - The abilities in the P-Organ upgrade tree
+  - The scaling of weapons
+- Add additional quality of life features to the game:
+  - Allow boss weapons to be disassembled
+  - Access levels 6 and 7 of the P-Organ upgrade tree without needing to enter NG+
+  - Make the "Golden Lie" weapon always fully-grown.
+  - And more!
+- Highly configurable
+- Set a seed for deterministic results.
+- Print a human-readable mapping file that describes the changes made, ~~or apply a mapping file to an unmodded game~~ (Coming soon)
+- No unpacking / repacking of assets required: just point the randomizer to the folder containing your game files and it does the rest, producing a pak file that can be dropped into the `~mods` folder in your game installation.
+- (But it can also read and write unpacked asset files if you know what you're doing and want to combine this with other mods.)
+
+## OS Support
+
+The randomizer can be run on both Windows and Mac. However, Mac users will have to unpack and repack manually. This is because of a dependency on https://github.com/trumank/repak, which does not have a prebuilt library for Apple Silicon. If you want to run this on Mac without unpacking and repacking assets, you'll need to install repak yourself, and build it from source if you're using ARM.
 
 ## Usage
-To get started using UAssetAPI, first build the API using the [Build Instructions guide](https://atenfyr.github.io/UAssetAPI/guide/build.html) and learn how to perform basic operations on your cooked .uasset files using the [Basic Usage guide](https://atenfyr.github.io/UAssetAPI/guide/basic.html).
 
-UAssetGUI, a graphical wrapper around UAssetAPI which allows you to directly view and modify game assets by hand, is also available and can be downloaded for free on GitHub at [https://github.com/atenfyr/UAssetGUI/releases](https://github.com/atenfyr/UAssetGUI/releases).
+To build, I recommend opening `LiesOfPRandomizer.sln` in Visual Studio or Visual Studio Code.
+
+To run the randomizer, you'll need the .usmap file for the game. If you want the randomizer to read and write .pak files, you also need the game's encryption key. Neither is provided here.
+
+You'll also need a config file sets the different parameters for randomization. An example config file is provided in `config.json`, feel free to modify it to your liking.
 
 ## Contributing
-All contributions, whether through pull requests or issues, that you may make are greatly appreciated.
 
-I am particularly interested in Unreal Engine 4 .uasset files that have their `VerifyBinaryEquality()` method return false (or display "failed to maintain binary equality" within [UAssetGUI](https://github.com/atenfyr/UAssetGUI)); if you encounter such an asset, feel free to submit an issue here with a copy of the asset in question along with the name of the game and the Unreal version that it was cooked with.
+This randomizer uses a module system that makes it easy for anyone to add additional randomization elements. Looking at the existing modules should hopefully make it clear how they work.
+
+Pull requests are welcome. If you have a feature request, please file an issue.
 
 ## License
-UAssetAPI and UAssetGUI are distributed under the MIT license, which you can view in detail in the [LICENSE file](LICENSE).
+
+LiesOfPRandomizer is distributed under the MIT license, which you can view in detail in the [LICENSE file](LICENSE).
