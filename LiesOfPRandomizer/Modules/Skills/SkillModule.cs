@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using UAssetAPI;
-using UAssetAPI.UnrealTypes;
 using UAssetAPI.PropertyTypes.Objects;
 
 namespace LiesOfPRandomizer;
@@ -13,6 +5,7 @@ namespace LiesOfPRandomizer;
 public class SkillModule(
     AssetManager assets,
     SkillConfig config,
+    CoreConfig coreConfig,
     KeyedProvider<SkillModule, Random> random) : Module<SkillModule, SkillConfig, SkillMap>, Module {
 
     static string Module.name => "skills";
@@ -23,7 +16,7 @@ public class SkillModule(
 
         List<string> skillSlots = (
             from effect in GameData.QuartzSlotBuffs
-            where effect.level <= config.max_organ_level
+            where effect.level <= coreConfig.max_organ_level
             select effect.name
         ).ToList();
 
@@ -38,7 +31,7 @@ public class SkillModule(
 
         List<string> skillNodes = (
             from effect in GameData.QuartzNodeBuffs
-            where effect.level <= config.max_organ_level
+            where effect.level <= coreConfig.max_organ_level
             select effect.name
         ).ToList();
 
@@ -83,7 +76,7 @@ public class SkillModule(
         StructProperty conditionInfo = assets.openStruct("ContentConditionInfo");
 
 
-        if (config.remove_chapter_1_level_cap)
+        if (coreConfig.remove_chapter_1_level_cap)
         {
             constantInfoArray.getStructProperty("MaxLevel_Station_Stargazer").getStringProperty("_value").Value = "999";
             // TODO: There are multiple elements of this array with the same _code_name

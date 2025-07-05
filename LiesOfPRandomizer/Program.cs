@@ -1,11 +1,9 @@
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.CommandLine;
 
 using UAssetAPI.Unversioned;
 using LiesOfPRandomizer;
-using UAssetAPI;
 
 Option<FileInfo> usmapOption = new(
     name: "--usmap",
@@ -93,6 +91,7 @@ rootCommand.SetHandler((usmapFile, configFile, inDir, outPakFile, aesKey, outMap
     Usmap usmap = new Usmap(usmapFile.FullName);
     AssetManager assetManager = AssetManager.Create(inDir, usmap, aesKey);
     Randomizer randomizer = new(config, assetManager);
+    randomizer.AddModule<CoreModule>();
     randomizer.AddModule<WeaponModule>();
     randomizer.AddModule<ItemModule>();
     randomizer.AddModule<SkillModule>();
