@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UAssetAPI.UnrealTypes;
-using UAssetAPI.ExportTypes;
-using UAssetAPI.PropertyTypes.Objects;
-using UAssetAPI;
-using UAssetAPI.Unversioned;
-using UAssetAPI.PropertyTypes.Structs;
-using System.Xml.Linq;
-
-using static LiesOfPRandomizer.ItemPriorityMethods;
+﻿using UAssetAPI.UnrealTypes;
 
 namespace LiesOfPRandomizer;
 
