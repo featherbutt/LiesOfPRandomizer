@@ -121,17 +121,17 @@ internal static class ItemPriorityMethods
 
         string[] highestPriority = [
             "Reinforce_Hero_G2",
-                "Reinforce_Blade_Common_G4",
-                "Reinforce_SlaveArm_G1",
-                "Exchange_SlaveArm_Parts_4",
-                "quartz",
-                "Consume_ProtectDropErgo_7L",
-                "Consume_ProtectDropErgo_6L",
-                "Consume_ProtectDropErgo_5L",
-                "Consume_ProtectDropErgo_4L",
-                "Consume_ProtectDropErgo_3L",
-                "Consume_ProtectDropErgo_2L",
-                "Consume_ProtectDropErgo_1L",
+            "Reinforce_Blade_Common_G4",
+            "Reinforce_SlaveArm_G1",
+            "Exchange_SlaveArm_Parts_4",
+            "quartz",
+            "Consume_ProtectDropErgo_7L",
+            "Consume_ProtectDropErgo_6L",
+            "Consume_ProtectDropErgo_5L",
+            "Consume_ProtectDropErgo_4L",
+            "Consume_ProtectDropErgo_3L",
+            "Consume_ProtectDropErgo_2L",
+            "Consume_ProtectDropErgo_1L",
             ];
 
 
@@ -142,13 +142,13 @@ internal static class ItemPriorityMethods
 
         string[] middlePriority = [
             "Reinforce_Hero_G1",
-                "Reinforce_Blade_Common_G1",
-                "Reinforce_Blade_Common_G2",
-                "Reinforce_Blade_Common_G3",
-                "Consume_ProtectDropErgo_3M",
-                "Consume_ProtectDropErgo_2M",
-                "Consume_ProtectDropErgo_1M",
-                "Consume_ProtectDropErgo_1MP",
+            "Reinforce_Blade_Common_G1",
+            "Reinforce_Blade_Common_G2",
+            "Reinforce_Blade_Common_G3",
+            "Consume_ProtectDropErgo_3M",
+            "Consume_ProtectDropErgo_2M",
+            "Consume_ProtectDropErgo_1M",
+            "Consume_ProtectDropErgo_1MP",
             ];
 
         if (middlePriority.Contains(itemName))
@@ -158,13 +158,13 @@ internal static class ItemPriorityMethods
 
         string[] lowPriority = [
             "Reinforce_Hero_G1",
-                "Reinforce_Blade_Common_G1",
-                "Reinforce_Blade_Common_G2",
-                "Reinforce_Blade_Common_G3",
-                "Consume_ProtectDropErgo_1",
-                "Consume_ProtectDropErgo_2",
-                "Consume_ProtectDropErgo_3",
-                "Consume_ProtectDropErgo_4",
+            "Reinforce_Blade_Common_G1",
+            "Reinforce_Blade_Common_G2",
+            "Reinforce_Blade_Common_G3",
+            "Consume_ProtectDropErgo_1",
+            "Consume_ProtectDropErgo_2",
+            "Consume_ProtectDropErgo_3",
+            "Consume_ProtectDropErgo_4",
             ];
 
         if (lowPriority.Contains(itemName))

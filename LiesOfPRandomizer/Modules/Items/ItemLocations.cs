@@ -460,7 +460,7 @@ public record class ItemLocations(AssetManager assets, ItemConfig config, Random
         StructProperty shopStruct = assets.openStruct("ShopSpecialInfo");
         ArrayProperty shopArray = shopStruct.getArrayProperty("_ShopSpecial_array");
 
-        // Todo: handle seeling price and stock limit. Make sure weird chapter 1 NPC isn't bugged.
+        // Todo: handle setting price and stock limit. Make sure weird chapter 1 NPC isn't bugged.
         foreach (var shopItem in shopArray)
         {
             var condition = shopItem.getNameProperty("_condition");

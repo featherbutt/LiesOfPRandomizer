@@ -1,17 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Extensions.DependencyInjection;
-
 namespace LiesOfPRandomizer;
 
 public class ItemModule(
     AssetManager assets,
     ItemConfig config,
+    CoreConfig coreconfig,
     WeaponConfig weaponConfig,
     KeyedProvider<ItemModule, Random> random_,
     WeaponMap weaponMap) : Module<ItemModule, ItemConfig, ItemMap>, Module {
@@ -47,37 +39,40 @@ public class ItemModule(
         var totalLocations = itemLocations.numLocations;
         var bufferSize = (int)(totalLocations * (1.0 - config.chaos));
 
+        // High value items are the ones that most meaningful to the player. We want to assign these first, and put them in high value locations.
         var highValueItems = new List<string>();
-        highValueItems.AddMany("quartz", config.total_quartz);
-        highValueItems.AddMany("Handle_InfusionStone_Type1", config.total_motivity_cranks);
-        highValueItems.AddMany("Handle_InfusionStone_Type2", config.total_technique_cranks);
-        highValueItems.AddMany("Handle_InfusionStone_Type3", config.total_advance_cranks);
-        highValueItems.AddMany("Handle_InfusionStone_Type4", config.total_balance_cranks);
-        highValueItems.AddMany("Reinforce_SlaveArm_G1", config.total_legion_caliber);
-        highValueItems.AddMany("Reinforce_Blade_Common_G4", config.total_full_moonstones);
-        highValueItems.AddMany("Reinforce_Hero_G2", config.total_full_covenant_moonstones);
-        highValueItems.AddMany("Reinforce_SlaveArm_G1", config.total_legion_caliber);
+        IDictionary<string, uint> override_amounts = new Dictionary<string, uint>();
+        foreach (var material in GameData.Materials)
+        {
+            uint amountToAdd = override_amounts.ContainsKey(material.Name)
+                ? override_amounts[material.Name]
+                : material.AmountInBaseGame;
+            if (coreconfig.include_dlc)
+                amountToAdd += material.AmountInDlc;
+            if (config.double_boss_ergo)
+                amountToAdd += material.ExtraAmount;
+            highValueItems.AddMany(material.Name, amountToAdd);
+        }
         highValueItems.AddRange(from weapon in GameData.Weapons select weapon.Handle);
         if (config.find_legion_arms)
         {
             highValueItems.AddRange(from arm in GameData.FindableLegionArms select arm.Name);
-        } else
+        }
+        else
         {
             // TODO: Either add the items to unlock Flamberge and Fulminis, or change the shop so they require legion plugs.
             highValueItems.AddMany("Exchange_SlaveArm_Parts_4", 7);
         }
-        highValueItems.AddRange(GameData.Cosmetics);
-        highValueItems.AddRange(GameData.Gestures);
-        highValueItems.AddRange(GameData.BossErgo);
-        if (config.double_boss_ergo)
-        {
-            highValueItems.AddRange(GameData.BossErgo);
-        }
-        highValueItems.AddRange(GameData.Amulets);
+        highValueItems.AddRange(from cosmetic in GameData.Cosmetics select cosmetic.Name);
+        highValueItems.AddRange(from gesture in GameData.Gestures select gesture.Name);
+        highValueItems.AddRange(
+            from amulet in GameData.AmuletBuffs
+            where !amulet.isDlc || coreconfig.include_dlc
+            where amulet.ngp == 0 || config.include_ngp_equipment
+            select amulet.name);
         highValueItems.AddRange(GameData.Armor);
         if (config.include_ngp_equipment)
         {
-            highValueItems.AddRange(GameData.AmuletsNGP);
             highValueItems.AddRange(GameData.ArmorNGP);
         }
 
@@ -87,7 +82,6 @@ public class ItemModule(
 
         // TODO: These numbers are arbitrary.
         List<string> mediumValueItems = new();
-        mediumValueItems.AddMany("Reinforce_Hero_G1", config.total_crescent_covenant_moonstones);
         mediumValueItems.AddMany("Reinforce_Blade_Common_G3", 70);
         mediumValueItems.AddMany("Reinforce_Blade_Common_G2", 70);
         mediumValueItems.AddMany("Reinforce_Blade_Common_G1", 70);
