@@ -1,4 +1,11 @@
 {
+	"core": {
+		// If true, the level cap for chapter 1 is removed.
+		// This allows you to level up past 20 in chapter 1.
+		"remove_chapter_1_level_cap": true,
+		"include_dlc": true,
+		"max_organ_level": 7,
+	},
 	"weapons": {
 		"randomize_locations": true,
 		"randomize_combinations": "all",
@@ -11,9 +18,6 @@
 	"skills": {
 		"skill_slots": "with_others",
 		"skill_nodes": "with_others",
-		"max_organ_level": 7,
-	
-		"remove_chapter_1_level_cap": true,
 		"max_slots_per_node": true,
 	},
 	"items": {

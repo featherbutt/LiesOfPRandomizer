@@ -75,24 +75,6 @@ public class SkillModule(
         ArrayProperty constantInfoArray = contentInfo.getArrayProperty("_CommonConstant_array");
         StructProperty conditionInfo = assets.openStruct("ContentConditionInfo");
 
-
-        if (coreConfig.remove_chapter_1_level_cap)
-        {
-            constantInfoArray.getStructProperty("MaxLevel_Station_Stargazer").getStringProperty("_value").Value = "999";
-            // TODO: There are multiple elements of this array with the same _code_name
-            // conditionArray.getStructProperty("Block_LvUp_UI_over_20lv_menu").getStringProperty("_value").Value = "999";
-        }
-
-        if (config.max_organ_level == 6)
-        {
-            constantInfoArray.getStructProperty("P_system_level_limit_NewGamePlus_0").getStringProperty("_value").Value = "6";
-
-        } else if (config.max_organ_level == 7)
-        {
-            constantInfoArray.getStructProperty("P_system_level_limit_NewGamePlus_0").getStringProperty("_value").Value = "7";
-            constantInfoArray.getStructProperty("P_system_level_limit_NewGamePlus_1").getStringProperty("_value").Value = "7";
-        }
-
         if (skillMap.slots.Count > 0)
         {
             ArrayProperty quartzEffectInfo = assets.openStruct("QuartzEffectInfo")

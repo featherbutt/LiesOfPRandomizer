@@ -23,5 +23,15 @@ public class CoreModule(
             // TODO: There are multiple elements of this array with the same _code_name
             // conditionArray.getStructProperty("Block_LvUp_UI_over_20lv_menu").getStringProperty("_value").Value = "999";
         }
+
+        if (coreConfig.max_organ_level == 6)
+        {
+            constantInfoArray.getStructProperty("P_system_level_limit_NewGamePlus_0").getStringProperty("_value").Value = "6";
+
+        } else if (coreConfig.max_organ_level == 7)
+        {
+            constantInfoArray.getStructProperty("P_system_level_limit_NewGamePlus_0").getStringProperty("_value").Value = "7";
+            constantInfoArray.getStructProperty("P_system_level_limit_NewGamePlus_1").getStringProperty("_value").Value = "7";
+        }
     }
 }
