@@ -1,6 +1,4 @@
-﻿using UAssetAPI.Unversioned;
-
-namespace LiesOfPRandomizer;
+﻿namespace LiesOfPRandomizer;
 
 static class Globals
 {

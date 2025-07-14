@@ -31,7 +31,10 @@ public class ItemModule(
 
         var itemLocationsByPriority = itemLocations.GetLocationsByPriority();
 
-        var weapons = (string[]) GameData.WeaponHandles.Clone();
+        var weapons = (
+            from weapon in GameData.Weapons
+            select weapon.Blade
+        ).ToArray();
         random.Shuffle(weapons);
         IEnumerable<string> weaponsEnumerable = weapons.AsEnumerable();
         // Some items must be weapons, so we assign those first.
@@ -54,13 +57,13 @@ public class ItemModule(
         highValueItems.AddMany("Reinforce_Blade_Common_G4", config.total_full_moonstones);
         highValueItems.AddMany("Reinforce_Hero_G2", config.total_full_covenant_moonstones);
         highValueItems.AddMany("Reinforce_SlaveArm_G1", config.total_legion_caliber);
-        highValueItems.AddRange(GameData.WeaponHandles);
+        highValueItems.AddRange(from weapon in GameData.Weapons select weapon.Handle);
         if (config.find_legion_arms)
         {
-            highValueItems.AddRange(GameData.FindableLegionArms);
+            highValueItems.AddRange(from arm in GameData.FindableLegionArms select arm.Name);
         } else
         {
-            // TODO: Eithwr add the items to unlock Flamberge and Fulminis, or change the shop so they require legion plugs.
+            // TODO: Either add the items to unlock Flamberge and Fulminis, or change the shop so they require legion plugs.
             highValueItems.AddMany("Exchange_SlaveArm_Parts_4", 7);
         }
         highValueItems.AddRange(GameData.Cosmetics);

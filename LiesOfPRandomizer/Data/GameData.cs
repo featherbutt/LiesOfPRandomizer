@@ -242,8 +242,8 @@ public static class GameData
 
     public record class Weapon(string name, string displayName, bool isBoss, bool isDlc)
     {
-        public string handle => $"WP_PC_HND_{name}";
-        public string blade => $"WP_PC_BLD_{name}";
+        public string Handle => $"WP_PC_HND_{name}";
+        public string Blade => $"WP_PC_BLD_{name}";
     }
 
     public static Weapon[] Weapons = [
@@ -303,7 +303,7 @@ public static class GameData
         new Weapon("Gakgung", "Royal Horn Bow", true, true),
     ];
 
-    public record class Item(string name, string displayName, bool isDlc);
+    public record class Item(string Name, string DisplayName, bool IsDlc);
 
     public static Item[] FindableLegionArms = [
         new Item("SlaveArm_PileBunker", "", false),

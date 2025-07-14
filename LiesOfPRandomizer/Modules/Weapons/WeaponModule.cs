@@ -65,22 +65,22 @@ public class WeaponModule(
         List<string> bladesToNotShuffle;
         switch (config.randomize_combinations) {
             case WeaponConfig.RandomizeWeaponCombinationOptions.ALL:
-                handlesToShuffle = [.. GameData.WeaponHandles, .. GameData.BossWeaponHandles];
+                handlesToShuffle = (from weapon in GameData.Weapons select weapon.Handle).ToList();
                 handlesToNotShuffle = new();
-                bladesToShuffle = [.. GameData.WeaponBlades, .. GameData.BossWeaponBlades];
+                bladesToShuffle = (from weapon in GameData.Weapons select weapon.Blade).ToList();
                 bladesToNotShuffle = new();
                 break;
             case WeaponConfig.RandomizeWeaponCombinationOptions.NONE:
                 handlesToShuffle = new();
-                handlesToNotShuffle = [.. GameData.WeaponHandles, .. GameData.BossWeaponHandles];
+                handlesToNotShuffle = (from weapon in GameData.Weapons select weapon.Handle).ToList();
                 bladesToShuffle = new();
-                bladesToNotShuffle = [.. GameData.WeaponBlades, .. GameData.BossWeaponBlades];
+                bladesToNotShuffle = (from weapon in GameData.Weapons select weapon.Blade).ToList();
                 break;
             case WeaponConfig.RandomizeWeaponCombinationOptions.NON_BOSS:
-                handlesToShuffle = [.. GameData.WeaponHandles];
-                handlesToNotShuffle = [.. GameData.BossWeaponHandles];
-                bladesToShuffle = [.. GameData.WeaponBlades];
-                bladesToNotShuffle = [.. GameData.BossWeaponBlades];
+                handlesToShuffle = (from weapon in GameData.Weapons where weapon.isBoss select weapon.Handle).ToList();
+                handlesToNotShuffle = (from weapon in GameData.Weapons where !weapon.isBoss select weapon.Handle).ToList();
+                bladesToShuffle = (from weapon in GameData.Weapons where weapon.isBoss select weapon.Blade).ToList();
+                bladesToNotShuffle = (from weapon in GameData.Weapons where !weapon.isBoss select weapon.Blade).ToList();
                 break;
             default:
                 throw new NotImplementedException();
@@ -126,9 +126,15 @@ public class WeaponModule(
         StructProperty constantInfo = assets.openStruct("CommonConstantInfo");
         ArrayProperty constantInfoArray = constantInfo.getArrayProperty("_CommonConstant_array");
 
-        List<string> weaponHandles = [..GameData.WeaponHandles, ..GameData.BossWeaponHandles];
-        List<string> weaponBlades = [..GameData.WeaponBlades, ..GameData.BossWeaponBlades];
-        
+        List<string> weaponHandles = (
+            from weapon in GameData.Weapons
+            select weapon.Handle
+        ).ToList();
+        List<string> weaponBlades = (
+            from weapon in GameData.Weapons
+            select weapon.Blade
+        ).ToList();
+
         if (config.randomize_starting_weapons)
         {
             for (int i = 1; i <= 3; i++)
