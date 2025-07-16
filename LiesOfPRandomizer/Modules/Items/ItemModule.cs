@@ -19,7 +19,7 @@ public class ItemModule(
             return new ItemMap();
         }
 
-        ItemLocations itemLocations = new ItemLocations(assets, config, random, weaponMap, weaponConfig);
+        ItemLocations itemLocations = new ItemLocations(assets, config, random, weaponMap, weaponConfig, coreconfig);
 
         var itemLocationsByPriority = itemLocations.GetLocationsByPriority();
 
@@ -65,6 +65,12 @@ public class ItemModule(
         }
         highValueItems.AddRange(from cosmetic in GameData.Cosmetics select cosmetic.Name);
         highValueItems.AddRange(from gesture in GameData.Gestures select gesture.Name);
+        highValueItems.AddRange(from item in GameData.UpgradeKeyItems select item.Name);
+        highValueItems.AddRange(from item in GameData.ExpandShopItems select item.Name);
+        highValueItems.AddRange(from item in GameData.UsefulItems select item.Name);
+        highValueItems.AddRange(from item in GameData.QuestItems select item.Name);
+        highValueItems.AddRange(from item in GameData.Records select item.Name);
+        highValueItems.AddRange(from item in GameData.UniqueItems select item.Name);
         highValueItems.AddRange(
             from amulet in GameData.AmuletBuffs
             where !amulet.isDlc || coreconfig.include_dlc
@@ -85,10 +91,11 @@ public class ItemModule(
         mediumValueItems.AddMany("Reinforce_Blade_Common_G3", 70);
         mediumValueItems.AddMany("Reinforce_Blade_Common_G2", 70);
         mediumValueItems.AddMany("Reinforce_Blade_Common_G1", 70);
-        mediumValueItems.AddMany("Consume_Buff_sharpness_Fire", 10);
-        mediumValueItems.AddMany("Consume_Buff_sharpness_Acid", 10);
-        mediumValueItems.AddMany("Consume_Buff_sharpness_Elec", 10);
-        mediumValueItems.AddMany("Consume_Throw_shotput", 10);
+        mediumValueItems.AddMany("Consume_Buff_sharpness_Fire", 20);
+        mediumValueItems.AddMany("Consume_Buff_sharpness_Acid", 20);
+        mediumValueItems.AddMany("Consume_Buff_sharpness_Elec", 20);
+        mediumValueItems.AddMany("Consume_Throw_shotput", 20);
+        mediumValueItems.AddRange(from item in GameData.UselessItems select item.Name);
 
         var mediumValueItemsArray = mediumValueItems.ToArray();
         random.Shuffle(mediumValueItemsArray);
@@ -117,12 +124,9 @@ public class ItemModule(
             "Consume_Drop_Ergo_save",
             "Consume_Buff_sharpness_regain",
             "Consume_Buff_SlaveMagazine",
-            "Consume_Buff_SlaveMagazine",
             "Consume_Buff_stamina_regain",
             "Consume_Buff_Frenzy",
-            "Consume_Buff_Frenzy",
             "Helpmate_Material",
-            "Consume_Rechargeable_1",
             "goldTree_Booster1",
             "goldTree_Booster2",
             "goldTree_Booster3"

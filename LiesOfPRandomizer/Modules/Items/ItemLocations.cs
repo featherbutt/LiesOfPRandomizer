@@ -317,7 +317,7 @@ public class GiftWeaponLocation : ItemLocation
     }
 }
 
-public record class ItemLocations(AssetManager assets, ItemConfig config, Random random, WeaponMap weaponMap, WeaponConfig weaponConfig)
+public record class ItemLocations(AssetManager assets, ItemConfig config, Random random, WeaponMap weaponMap, WeaponConfig weaponConfig, CoreConfig coreconfig)
 {
     public int numLocations = 0;
 
@@ -362,42 +362,68 @@ public record class ItemLocations(AssetManager assets, ItemConfig config, Random
     {
         StructProperty itemPackageInfo = assets.openStruct("ItemPackageInfo");
         ArrayProperty itemPackageArray = itemPackageInfo.getArrayProperty("_ItemPackage_array");
+        
+        // An item package is a group of items that appear in a spot on the map.
+        // Each item package can have multiple items, but only one weapon.
+        // Some item packages have neither, so we don't yield those.
         foreach (var itemPackage in itemPackageArray)
         {
             if (!itemPackage.getProperty<bool>("_IsExist").Value)
             {
                 continue;
             }
-            if (itemPackage.getProperty<FName>("_code_name").Value.ToString().EndsWith("_R2"))
+            string codeName = itemPackage.getNameProperty("_code_name").Value!;
+            if (!this.coreconfig.include_dlc && (codeName.StartsWith("DLC_") || codeName.StartsWith("EasterEgg_")))
             {
                 continue;
             }
-            if (itemPackage.getProperty<FName>("_code_name").Value.ToString().EndsWith("_R3"))
+            // Ending in _R2 or _R3 means the item is only available in NG+ or NG++. We don't currently randomize NG+.
+            if (codeName.EndsWith("_R2"))
             {
                 continue;
             }
-            // Every item package in the vanila game has either items or a weapon, but not both.
+            if (codeName.EndsWith("_R3"))
+            {
+                continue;
+            }
             if (itemPackage.getProperty<int>("_Item_1_count").Value > 0)
             {
-
                 yield return new MapItemLocation(this, itemPackage);
-            }
-            
-            if (itemPackage.getProperty<FName>("_weapon_item_1_handle").Value != null)
+            } else if (itemPackage.getProperty<FName>("_weapon_item_1_handle").Value != null)
             {
                 yield return new MapItemLocation(this, itemPackage);
             }
-            
+
         }
     }
     
     public IEnumerable<ItemLocation> GetDropItemLocations()
     {
+        // We need to make sure that essential items don't get randomized onto missable drops.
+        // For now, we only want to identify drops that are:
+        // In PackageSettingInfo:
+        //  - available in NG+ Round 1
+        //  - have a drop rate of 100%
+        //  - have an _offer_method of EPackageOfferMethodType::E_AUTO
+        // Alternatively, we can look at what's being dropped in PackageConfigureInfo and only make high priority items valid locations.
+        // TODO: We currently add all items to the randomization pool, which is not reliable since high priority items might be put into missable / random slots.
+        // TODO: Does it matter if the drop has a set _condition_codename or an _item_acquisition_percentage?
         StructProperty itemDropInfo = assets.openStruct("ItemDropInfo");
         ArrayProperty itemDropArray = itemDropInfo.getArrayProperty("_PackageConfigureInfo_array");
         foreach (var itemDrop in itemDropArray)
         {
             if (itemDrop.getProperty<int>("_NGP_round").Value != 1)
+            {
+                continue;
+            }
+            // For now, only randomize drops that drop high priority items.
+            var itemName = itemDrop.getNameProperty("_item_code_name").Value;
+            if (itemName == null)
+            {
+                continue;
+            }
+            // TODO: What about items with conditional drop rates?
+            if (this.config.getItemPriority(itemName) != ItemPriority.HIGHEST)
             {
                 continue;
             }
@@ -407,6 +433,7 @@ public record class ItemLocations(AssetManager assets, ItemConfig config, Random
 
     public IEnumerable<ItemLocation> GetQuestItemLocations()
     {
+        // TODO: This could lead to important items being put in missable spots.
         StructProperty itemDropInfo = assets.openStruct("QuestInfo");
         ArrayProperty itemDropArray = itemDropInfo.getArrayProperty("_QuestStep_array");
 
@@ -443,7 +470,7 @@ public record class ItemLocations(AssetManager assets, ItemConfig config, Random
         StructProperty shopStruct = assets.openStruct("ShopInfo");
         ArrayProperty shopArray = shopStruct.getArrayProperty("_Shop_array");
 
-        // Todo: handle seeling price and stock limit. Make sure weird chapter 1 NPC isn't bugged.
+        // Todo: handle price and stock limit. Make sure weird chapter 1 NPC isn't bugged.
         foreach (var shopItem in shopArray)
         {
             var condition = shopItem.getNameProperty("_condition");

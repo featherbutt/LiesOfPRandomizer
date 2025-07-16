@@ -20,17 +20,18 @@ internal static class ItemPriorityMethods
         "Collection_Core_Electronic",
     ];
 
+    // Computes a priority of an item location based on what used to be there.
     public static ItemPriority getItemPriority(this ItemConfig itemConfig, string itemName)
     {
         if (neverRandomize.Contains(itemName))
         {
             return ItemPriority.DONT_RANDOMIZE;
         }
-        if (itemName.StartsWith("Collection_Record"))
+        if (GameData.IsWeaponHandle(itemName) || GameData.IsWeaponBlade(itemName))
         {
             return ItemPriority.HIGHEST;
         }
-        if (itemName.StartsWith("WP_PC_"))
+        if (itemName.StartsWith("Collection_Record"))
         {
             return ItemPriority.HIGHEST;
         }
@@ -107,7 +108,7 @@ internal static class ItemPriorityMethods
             return ItemPriority.HIGHEST;
         }
 
-        if (itemName.StartsWith("SlaveArm_"))
+        if (GameData.IsLegionArm(itemName))
         {
             if (itemConfig.find_legion_arms)
             {

@@ -240,6 +240,11 @@ public static class GameData
         return name.StartsWith("WP_PC_HND_");
     }
 
+    internal static bool IsWeaponBlade(string name)
+    {
+        return name.StartsWith("WP_PC_BLD_");
+    }
+
     public record class Weapon(string name, string displayName, bool isBoss, bool isDlc)
     {
         public string Handle => $"WP_PC_HND_{name}";
@@ -305,6 +310,11 @@ public static class GameData
 
     public record class Item(string Name, string DisplayName, bool IsDlc);
 
+    internal static bool IsLegionArm(string name)
+    {
+        return name.StartsWith("SlaveArm_");
+    }
+
     public static Item[] FindableLegionArms = [
         new Item("SlaveArm_PileBunker", "Deus Ex Machina", false),
         new Item("SlaveArm_Aegis", "Aegis", false),
@@ -320,43 +330,68 @@ public static class GameData
     ];
 
     public static Item[] Cosmetics = [
+        new Item("Costume_01", "White Shirt", false),
+        new Item("Costume_02", "Blue Blood’s Tailcoat", false),
+        new Item("Costume_03", "Workshop Master’s Workwear", false),
         new Item("Costume_Naughty_Boy", "Mischievous Puppet’s Clothes", false),
-        new Item("Costume_Stalker_Cat", "Black Cat’s Hunting Apparel", false),
-        new Item("Costume_03", "", false),
-        new Item("Costume_Factory_Meister", "Workshop Master’s Workwear", false),
-        new Item("Costume_Stalker_Monster_Hunter", "Monster Sweeper’s Hunting Apparel", false),
-        new Item("Costume_Prince_Robes", "Puppet Prince’s Formal Dress", false),
         new Item("Costume_Someone_Memory", "Someone’s Memory", false),
         new Item("Costume_Stalker_Madman", "Mad Donkey’s Hunting Apparel", false),
-        new Item("Costume_Stalker_Weasel", "Robber Weasel’s Hunting Apparel", false),
-        new Item("Costume_Stalker_Fox", "Red Fox’s Hunting Apparel", false),
         new Item("Costume_Stalker_Survivor", "Survivor’s Hunting Apparel", false),
-        new Item("Costume_Stalker_Pilgrim", "The Atoned's Hunting Apparel", false),
-        new Item("Costume_Alchemist_Cape", "Alchemist’s Cape", false),
-        new Item("Costume_Stalker_Army_Surgeon", "Owl Doctor’s Hunting Apparel", false),
-        new Item("Costume_Venigni_Coat", "The Great Venigni’s Signature Coat", false),
-        new Item("Costume_02", "Blue Blood’s Tailcoat", false),
-        new Item("Costume_01", "White Shirt", false),
         new Item("Costume_Stalker_WhiteLady", "The White Lady’s Hunting Apparel", false),
-        new Item("Mask_Stalker_Cat", "Black Cat’s Mask", false),
-        new Item("Mask_Stalker_Madman", "Mad Donkey’s Mask", false),
-        new Item("Mask_Stalker_Weasel", "Robber Weasel’s Mask", false),
-        new Item("Mask_Stalker_Fox", "Red Fox’s Mask", false),
-        new Item("Mask_Stalker_Survivor", "Survivor’s Mask", false),
+        new Item("Costume_Prince_Robes", "Puppet Prince’s Formal Dress", false),
+        new Item("Costume_Factory_Meister", "Workshop Master’s Workwear", false),
+        new Item("Costume_Stalker_Army_Surgeon", "Owl Doctor’s Hunting Apparel", false),
+        new Item("Costume_Stalker_Pilgrim", "The Atoned's Hunting Apparel", false),
+        new Item("Costume_Venigni_Coat", "The Great Venigni’s Signature Coat", false),
+        new Item("Costume_Stalker_Weasel", "Robber Weasel’s Hunting Apparel", false),
+        new Item("Costume_Stalker_Cat", "Black Cat’s Hunting Apparel", false),
+        new Item("Costume_Stalker_Monster_Hunter", "Monster Sweeper’s Hunting Apparel", false),
+        new Item("Costume_Alchemist_Cape", "Alchemist’s Cape", false),
+        new Item("Costume_Stalker_Fox", "Red Fox’s Hunting Apparel", false),
         new Item("Mask_Stalker_Pilgrim", "The Atoned's Mask", false),
+        new Item("Mask_Stalker_Madman", "Mad Donkey’s Mask", false),
+        new Item("Mask_Stalker_Survivor", "Survivor’s Mask", false),
         new Item("Mask_Stalker_ArmySurgeon", "Owl Doctor’s Mask", false),
         new Item("Mask_Stalker_WhiteLady", "The White Lady’s Mask", false),
-        new Item("Head_Naughty_Boy", "Mischievous Puppet’s Parade Hat", false),
+        new Item("Mask_Stalker_Weasel", "Robber Weasel’s Mask", false),
+        new Item("Mask_Stalker_Cat", "Black Cat’s Mask", false),
+        new Item("Mask_Stalker_Fox", "Red Fox’s Mask", false),
         new Item("Head_Glassess_Venigni", "The Great Venigni’s Glasses", false),
-        new Item("HatCostume_GuanYu", "", false),
-        new Item("Costume_GuanYu", "", false),
-        new Item("Head_Glassess_RudolfNose", "", false),
-        new Item("HatCostume_ReindeerHorn", "", false),
-        new Item("HatCostume_RedHat", "", false),
-        new Item("Costume_Alidoro", "", false),
-        new Item("HatCostume_Alidoro", "", false),
-        new Item("Head_Glassess_Emerald", "", false),
-        new Item("HatCostume_AlchemistHat", "", false)
+        new Item("Head_Naughty_Boy", "Mischievous Puppet’s Parade Hat", false),
+        new Item("Mask_Festival_Eve", "Mask worn by those preparing for the festival", false),
+        new Item("HatCostume_AlchemistHat", "Alchemist’s Hat", false),
+        new Item("HatCostume_Alidoro", "Treasure Hunter’s Mask", false),
+        new Item("Costume_Alidoro", "Treasure Hunter’s Hunting Apparel", false),
+        new Item("Head_Glassess_Emerald", "Illusory Emerald Glasses", false),
+        new Item("HatCostume_RedHat", "Winter Festival Peaked Hat", false),
+        new Item("HatCostume_ReindeerHorn", "Earnest Reindeer’s Antlers", false),
+        new Item("Head_Glassess_RudolfNose", "Midwinter Night’s Red Nose", false),
+        new Item("Costume_GuanYu", "Armor of the Honorable", false),
+        new Item("HatCostume_GuanYu", "Bandana of the Honorable", false),
+        new Item("DLC_Costume_WarmSuit", "Winter's Hunting Apparel", true),
+        new Item("DLC_Costume_Romeo", "Reddened Tailcoat", true),
+        new Item("DLC_Costume_Stalker_Goat", "Blue Sheep's Battle Apparel", true),
+        new Item("DLC_Costume_Stalker_Snail", "Golden Snail's Tailcoat", true),
+        new Item("DLC_Costume_Detective", "Famed Detective's Coat", true),
+        new Item("DLC_Costume_Rabbit1", "Black Death's Protective Apparel", true),
+        new Item("DLC_Costume_Rabbit2", "Blazing Death's Hunting Apparel", true),
+        new Item("DLC_Costume_Rabbit3", "Piercing Death's Hunting Apparel", true),
+        new Item("DLC_Costume_Rabbit4", "Permeating Death's Hunting Apparel", true),
+        new Item("DLC_Costume_Lea", "Leader's Battle Apparel", true),
+        new Item("DLC_HatCostume_WarmSuit", "Winter's Hunting Hat", true),
+        new Item("DLC_HatCostume_Stalker_Goat", "Blue Sheep's Mask", true),
+        new Item("DLC_HatCostume_Stalker_Snail", "Golden Snail's Mask", true),
+        new Item("DLC_HatCostume_Prince_Crown", "Puppet Prince's Imperial Crown", true),
+        new Item("DLC_HatCostume_Detective", "Famed Detective's Hat", true),
+        new Item("DLC_HatCostume_Rabbit1", "The Eldest's Gas Mask", true),
+        new Item("DLC_HatCostume_Rabbit2", "The Battle Maniac's Mask", true),
+        new Item("DLC_HatCostume_Rabbit3", "The Eccentric's Mask", true),
+        new Item("DLC_HatCostume_Rabbit4", "The Youngest's Mask", true),
+        new Item("DLC_HatCostume_Lea", "Leader's Mask", true),
+        new Item("DLC_Head_Glassess_Zoo", "Great Adventure Mask", true),
+        new Item("DLC_Head_Glassess_Eyepatch", "Veteran's Eyepatch", true),
+        new Item("DLC_Head_Glassess_Detective", "Famous Detective's Mustache", true),
+        new Item("DLC_Head_Glassess_Monocle", "Genius Meister's Monocle", true),
     ];
 
     public static string[] StartingArmor = [
@@ -498,7 +533,8 @@ public static class GameData
         "CH13_Boss_Ergo"
     ];
 
-    // TODO: Some of these gestures unlock things, notably Check Ground and the emotions you show to the robot.
+    // Some of these gestures unlock things, notably Check Ground and the emotions you show to the robot.
+    // These gestures are commented out here and included in the Quest Items list below instead.
     public static Item[] Gestures = [
         new Item("Gesture_SwordSalute", "Stalker's Promise", false),
         new Item("Gesture_Pray", "Pray", false),
@@ -508,20 +544,20 @@ public static class GameData
         new Item("Gesture_Show_Cloth", "Show Off Clothes", false),
         new Item("Gesture_Fear", "Fear", false),
         new Item("Gesture_Boast", "Swagger", false),
-        new Item("Gesture_Clap", "Clap", false),
-        new Item("Gesture_Sad", "Sad", false),
+        // new Item("Gesture_Clap", "Clap", false),
+        // new Item("Gesture_Sad", "Sad", false),
         new Item("Gesture_Praise", "Respect", false),
         new Item("Gesture_Hi", "Greet", false),
         new Item("Gesture_Sitdown", "Sit", false),
         new Item("Gesture_Provoke", "Taunt", false),
-        new Item("Gesture_Anger", "Anger", false),
-        new Item("Gesture_Interaction_Bottom", "Check Ground", false),
-        new Item("Gesture_Joy", "Happy", false),
-        new Item("DLC_Gesture_FeignDeath", "Play Dead", true),
+        // new Item("Gesture_Anger", "Anger", false),
+        // new Item("Gesture_Interaction_Bottom", "Check Ground", false),
+        // new Item("Gesture_Joy", "Happy", false),
+        // new Item("DLC_Gesture_FeignDeath", "Play Dead", true),
         new Item("DLC_Gesture_Shivering", "Shiver", true),
         new Item("DLC_Gesture_LookAhead", "Peer into Distance", true),
         new Item("DLC_Gesture_Cheer", "Cheer", true),
-        new Item("DLC_Gesture_Heart", "Heart", true),
+        // new Item("DLC_Gesture_Heart", "Heart", true),
         new Item("DLC_Gesture_Doubt", "Doubt", true),
         new Item("DLC_Gesture_Dance", "Tap Dance", true),
         new Item("DLC_Gesture_DeepBow", "Deep Bow", true),
@@ -622,6 +658,159 @@ public static class GameData
         new Item("Epic_key_hotel_VIP", "Secret Room Key", true),
         new Item("Epic_key_Ruin_BossRoom", "Secret Ruins Key", true),
         new Item("Epic_key_RoseGarden", "Rose Garden Key", true),
+    ];
+
+    // Unique items that serve a purpose, but don't progress any quests.
+    public static Item[] UsefulItems = [
+        new Item("Epic_Second_Life", "Completed Ergo Wavelength Decoder", false),
+        new Item("Consume_Nabal", "Daylight-Wreathed Horn", false),
+    ];
+
+    // Items that are required to complete sidequests, but don't unlock a new area.
+    public static Item[] QuestItems = [
+        new Item("Epic_RedApple", "Bright Red Apple", false),
+        new Item("Epic_PoliceDoll", "Small Wooden Officer Puppet", false),
+        new Item("Epic_Poison", "Archbishop's Holy Mark", false),
+        new Item("Epic_blackrabbit", "Smiling Bunny Mark", false),
+        new Item("Epic_babydoll", "Broken Baby Puppet", false),
+        new Item("Epic_ring", "Wedding Ring", false),
+        new Item("Epic_ring_blood", "Bloody Wedding Ring", false),
+        new Item("Consume_Instrument_01", "Faded Whistle", false),
+        new Item("Epic_riddle_box_01", "King of Riddles’ Surprise Box", false),
+        // TODO: What is the difference between the two riddle boxes?
+        // new Item("Epic_riddle_box_02", "King of Riddles’ Surprise Box", false),
+        new Item("Epic_boy_paint", "Portrait of a Boy", false),
+        new Item("Epic_WhiteLadyLocket", "The White Lady’s Locket", false),
+        new Item("Epic_RedLadyLocket", "Red Actress’s Locket", false),
+        new Item("Epic_OrphanageNecklace", "Someone’s Necklace", false),
+        new Item("Epic_WineCollection", "La Bleiwies", false),
+        new Item("Epic_Remedy", "A cure for Antonia", false),
+        new Item("Epic_DiscoloredRemedy", "A cure no more effective", false),
+        new Item("Epic_GoldenErgo", "Golden Ergo", false),
+        new Item("Epic_GoldenBattery", "Golden lead-acid battery", false),
+        new Item("Epic_Glove", "Four-fingered Glove", false),
+        new Item("Epic_PuppetKing_Message", "King of Puppets’ Message", false),
+        new Item("Epic_Venigni_Coin", "Venigni Commemorative Coin", false),
+        // The Gestures that you can show to the Broken Puppet are included here.
+        new Item("Gesture_Clap", "Clap", false),
+        new Item("Gesture_Sad", "Sad", false),
+        new Item("Gesture_Anger", "Anger", false),
+        new Item("Gesture_Joy", "Happy", false),
+        new Item("DLC_Gesture_Heart", "Heart", true),
+        new Item("DLC_Gesture_FeignDeath", "Play Dead", true),
+        // The Gesture_Interaction_Bottom is needed to complete one of the Cryptic Vessel sidequests.
+        new Item("Gesture_Interaction_Bottom", "Check Ground", false),
+        new Item("Epic_key_dottedpaper_room_01", "Letter with the Refuge’s Address", false),
+        new Item("Databox_Interpretation_01", "Crafted Cryptic Vessel Decryption", false),
+        new Item("Databox_Interpretation_02", "Jeweled Cryptic Vessel Decryption", false),
+        new Item("Databox_Interpretation_03", "Old Cryptic Vessel Decryption", false),
+        new Item("Databox_Interpretation_04", "Rusty Cryptic Vessel Decryption", false),
+        new Item("Databox_Interpretation_05", "Mechanical Cryptic Vessel Decryption", false),
+        new Item("Databox_Interpretation_06", "Alidoro’s Cryptic Vessel Decryption", false),
+        new Item("Dottedpaper_01", "Crafted Cryptic Vessel", false),
+        new Item("Dottedpaper_02", "Jeweled Cryptic Vessel", false),
+        new Item("Dottedpaper_03", "Old Cryptic Vessel", false),
+        new Item("Dottedpaper_04", "Rusty Cryptic Vessel", false),
+        new Item("Dottedpaper_05", "Mechanical Cryptic Vessel", false),
+        new Item("Dottedpaper_06", "Alidoro’s Cryptic Vessel", false),
+    ];
+
+    // Unique items that serve no progression purpose, but are still findable.
+    // Includes things like recollections and records.
+    public static Item[] UselessItems = [
+        new Item("Epic_ArmOfGod", "Arm of God", false),
+        new Item("Epic_ErgoWave_Interpreter", "Ergo Wavelength Decoder", false),
+        new Item("Epic_Riddleking_Evidence", "Moon World Warrior Toy", false),
+        new Item("DLC_Collection_Note_PictureDiary_03", "Drawing of a Family", true),
+        new Item("DLC_Collection_Note_PictureDiary", "Rosaura's Treasure: Piece of a Drawing", true),
+        new Item("DLC_Collection_Note_PictureDiary_02", "Rosaura's Treasure: Second Piece of a Drawing", true),
+        new Item("DLC_Collection_Note_PictureDiary_04", "Rosaura's Treasure: Third Piece of a Drawing", true),
+        new Item("DLC_Collection_Note_PictureDiary_05", "Rosaura's Treasure: Last Piece of a Drawing", true),
+        new Item("Collection_CentralStation_03", "A Letter that cannot arrive", false),
+        new Item("Collection_Letter_Introduce_ParadeDoll", "Introducing the Parade Puppet!", false),
+        new Item("Collection_CentralStation_05", "Bloody Letter", false),
+        new Item("Collection_CentralStation_06", "Lover’s Letter", false),
+        new Item("Collection_CentralStation_07", "Primer for Workshop Technicians", false),
+        new Item("Collection_KratTimes183", "Krat Times Issue 183", false),
+        new Item("Collection_KratNotedGuide1", "Venigni's Krat Landmark Guide I", false),
+        new Item("Collection_CentralStation_11", "Fairytale of the Three Brothers of the Workshop Tower", false),
+        new Item("Collection_KratTimes1124", "Krat News Issue 1124", false),
+        new Item("Collection_KratNotedGuide2", "Venigni's Krat Landmark Guide II", false),
+        new Item("Collection_Letter_doodle", "Torn Doodle", false),
+        new Item("Collection_Letter_02", "Miracle Cure", false),
+        new Item("Collection_Letter_Frozenman", "Frozen Man’s Letter", false),
+        new Item("Collection_Letter_04", "Doctor’s Confessions", false),
+        new Item("Collection_Letter_05", "Have you seen this eccentric?!", false),
+        new Item("Collection_Letter_08", "Venigni’s Guide", false),
+        new Item("Collection_Letter_10", "Guillaume’s Ballad", false),
+        new Item("Collection_Letter_11", "Descartes’s Note", false),
+        new Item("Collection_Letter_12", "Woman’s Prayer", false),
+        new Item("Collection_Letter_Cathedral_Vil_History", "Moonlight Town Guide", false),
+        new Item("Collection_Letter_15", "Archbishop's Diary", false),
+        new Item("Collection_Letter_passenger_note", "Passenger’s Note", false),
+        new Item("Collection_Letter_17", "Factory Manager’s Report", false),
+        new Item("Collection_Letter_18", "Have a taste of La Bleiwies, the greatest wine in the world!", false),
+        new Item("Collection_Letter_19", "Sweepers Branch Office Newspaper Archives", false),
+        new Item("Collection_Letter_20", "Cecile’s Written Confession", false),
+        new Item("Collection_Letter_21", "Monad Charity House Guide", false),
+        new Item("Collection_Letter_22", "Black Rabbit Brotherhood Ledger", false),
+        new Item("Collection_Letter_23", "The Witch's Tower and Princess Poster", false),
+        new Item("Collection_Letter_Artist_Scribble", "Artist’s Doodle", false),
+        new Item("Collection_Letter_25", "Rose Estate Incident, left as a mystery", false),
+        new Item("Collection_Letter_26", "Notes from an Experiment", false),
+        new Item("Collection_Letter_StrangerConfession", "Special Report! Foreigner’s Confession", false),
+        new Item("Collection_Letter_MonadCharity", "Monad Charity House Concert", false),
+        new Item("Collection_Letter_MonsterCityLegend", "Resurrection! Champion Victor has returned!", false),
+        new Item("Collection_Letter_KratGrandExposition_SpecialArticle", "The greatest show on Earth is coming!", false),
+        new Item("Collection_Letter_concierge_note", "Order of Kroud Report", false),
+        new Item("Collection_Letter_Remedy_TestRecord", "Experiment Report of Order - Test Subject 890", false),
+        new Item("Collection_Letter_RiddleKingHint", "King of Riddles’ Hint", false),
+        new Item("Collection_Letter_33", "Sentry’s Notebook", false),
+        new Item("Collection_Letter_34", "Venigni's Krat Landmark Guide IV", false),
+        new Item("Collection_Letter_InterviewNote", "Someone’s Report Notes Notebook", false),
+        new Item("Collection_Letter_SMMockery", "Letter from Someone Who Has Gone Ahead", false),
+        new Item("Collection_Letter_DearBell", "Atkinson’s Letter", false),
+        new Item("Collection_Letter_39", "Bundle of Old Letters", false),
+        new Item("Collection_Letter_40", "Cherry-Scented Letter", false),
+        new Item("Collection_Letter_41", "So Said Pistris I", false),
+        new Item("Collection_Letter_TragedyofV", "Scandal! V, the Tragedy Behind the Flamboyance", false),
+        new Item("Collection_Letter_FirstDiscovery", "First Discovery, Camille", false),
+        new Item("Collection_Letter_42", "So Said Pistris II", false),
+        new Item("Collection_Letter_43", "Wanted: Alidoro", false),
+        new Item("Collection_Letter_47", "So Said Pistris III", false),
+        new Item("Collection_Letter_49", "Simon Manus’s Confession", false),
+        new Item("Collection_Letter_50", "Note Left at the Counter", false),
+        new Item("Collection_Letter_51", "The Great Venigni and Pistris the Submarine", false),
+        new Item("Collection_Letter_52", "Wanted: Black Rabbit Brotherhood", false),
+        new Item("Collection_Letter_SlummerScrawl", "Scribbles of Slum Resident", false),
+        new Item("Collection_Letter_StalkerMask", "[This month’s trend: Stalker masks]", false),
+        new Item("Collection_Letter_53", "Geppetto’s Letter", false),
+        new Item("Collection_Letter_54", "The Blue Butterfly’s Letter", false),
+        new Item("Collection_Letter_55", "The Letter of the Eternal", false),
+        new Item("Collection_Letter_56", "Crumpled Baptist’s Doodle", false),
+        new Item("Collection_Letter_AlidoroNote", "Frayed Notebook", false),
+        new Item("Collection_Letter_CatFake", "Ripped Venigni's Krat Landmark Guide III", false),
+        new Item("Collection_Letter_Score", "Stained Choir Sheet Music", false),
+    ];
+
+    // Records aren't useless items because they provide humanity.
+    public static Item[] Records = [
+        new Item("Collection_Record_1", "Shadow Flower", false),
+        new Item("Collection_Record_2", "Misty E'rA", false),
+        new Item("Collection_Record_3", "Fascination", false),
+        new Item("Collection_Record_4", "Feel", false),
+        new Item("Collection_Record_5", "Someday", false),
+        new Item("Collection_Record_6", "Divine Service", false),
+        new Item("Collection_Record_7", "Far East Princess", false),
+        new Item("Collection_Record_8", "Memory of Beach", false),
+        new Item("Collection_Record_9", "Quixotic", false),
+        new Item("Collection_Record_10", "Proposal, Flower, Wolf Part 1", false),
+        new Item("Collection_Record_11", "Why", false),
+        new Item("DLC_Collection_Record_1", "Lisrim", true),
+        new Item("DLC_Collection_Record_2", "SURVIVOR", true),
+        new Item("DLC_Collection_Record_3", "Nightmare", true),
+        new Item("DLC_Collection_Record_4", "The Clear Blue Sky", true),
+        new Item("DLC_Collection_Record_8", "Nightmare", true),
     ];
 
     public static Item[] UniqueItems = [
